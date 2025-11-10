@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Motif d'arrière-plan subtil avec nuances */
+@layer base {
+    body {
+        @apply text-gray-900;
+        background-color: #f5f5f4;
+        background-image: 
+            radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.04) 1px, transparent 0);
+        background-size: 24px 24px;
+    }
+}
+
+/* Motif de grille subtil pour les sections - variante 1 */
+.bg-pattern {
+    background-color: #f8f9fa;
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.025) 1px, transparent 1px);
+    background-size: 32px 32px;
+}
+
+/* Motif de grille avec nuance beige */
+.bg-pattern-warm {
+    background-color: #faf9f7;
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+    background-size: 28px 28px;
+}
+
+/* Motif de points subtil */
+.bg-dots {
+    background-color: #f7f7f6;
+    background-image: radial-gradient(circle, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+/* Section avec nuance gris-bleu très subtil */
+.bg-section {
+    background-color: #f6f7f8;
+    background-image: 
+        radial-gradient(circle at 2px 2px, rgba(0, 0, 0, 0.03) 1px, transparent 0);
+    background-size: 30px 30px;
+}
+
+@layer components {
+    /* Design épuré pour les cartes */
+    .card-minimal {
+        @apply bg-white border border-gray-200 rounded-lg transition-colors hover:border-gray-300 shadow-sm;
+    }
+    
+    /* Boutons épurés */
+    .btn-minimal {
+        @apply px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md transition-colors hover:bg-gray-50 hover:border-gray-400 shadow-sm;
+    }
+    
+    .btn-minimal-primary {
+        @apply px-4 py-2 text-sm font-medium text-white bg-gray-900 border border-gray-900 rounded-md transition-colors hover:bg-gray-800 shadow-sm;
+    }
+}
