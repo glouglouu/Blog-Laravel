@@ -8,8 +8,8 @@
                 </svg>
             </div>
         </div>
-        <h2 class="text-2xl font-semibold text-gray-900">Connexion</h2>
-        <p class="mt-2 text-sm text-gray-600">Connectez-vous à votre compte</p>
+        <h2 class="text-2xl font-semibold text-gray-900">{{ __('Connexion') }}</h2>
+        <p class="mt-2 text-sm text-gray-600">{{ __('Connectez-vous à votre compte') }}</p>
     </div>
 
     <!-- Session Status -->
@@ -70,9 +70,9 @@
     <!-- Register Link -->
     <div class="mt-6 text-center">
         <p class="text-sm text-gray-600">
-            Pas encore de compte ?
+            {{ __('Pas encore de compte ?') }}
             <a href="{{ route('register') }}" class="font-medium text-gray-900 hover:text-gray-700">
-                Créer un compte
+                {{ __('Créer un compte') }}
             </a>
         </p>
     </div>

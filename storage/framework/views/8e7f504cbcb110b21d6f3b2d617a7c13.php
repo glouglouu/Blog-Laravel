@@ -48,25 +48,6 @@
                class="text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors">
                 Lire l'article →
             </a>
-            
-            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('update', $post)): ?>
-                <a href="<?php echo e(route('posts.edit', $post)); ?>" 
-                   class="ml-auto text-sm text-gray-600 hover:text-gray-900 transition-colors">
-                    Modifier
-                </a>
-            <?php endif; ?>
-            
-            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete', $post)): ?>
-                <form action="<?php echo e(route('posts.destroy', $post)); ?>" method="POST" class="inline">
-                    <?php echo csrf_field(); ?>
-                    <?php echo method_field('DELETE'); ?>
-                    <button type="submit" 
-                            class="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?')">
-                        Supprimer
-                    </button>
-                </form>
-            <?php endif; ?>
         </div>
     </div>
 </article>

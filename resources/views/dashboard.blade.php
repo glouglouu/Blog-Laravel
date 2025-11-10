@@ -15,17 +15,17 @@
                 <!-- Carte statistiques -->
                 <div class="card-minimal p-6">
                     <div class="flex items-center justify-between">
-                        <h3 class="text-base font-medium text-gray-900">Statistiques</h3>
+                        <h3 class="text-base font-medium text-gray-900">{{ __('Statistiques') }}</h3>
                     </div>
                     <p class="mt-4 text-2xl font-semibold text-gray-900">89%</p>
-                    <p class="mt-1 text-sm text-gray-500">Augmentation ce mois</p>
+                    <p class="mt-1 text-sm text-gray-500">{{ __('Augmentation ce mois') }}</p>
                 </div>
 
                 <!-- Carte activité -->
                 <div class="card-minimal p-6">
                     <div class="flex items-center justify-between">
-                        <h3 class="text-base font-medium text-gray-900">Activité récente</h3>
-                        <span class="text-xs font-medium text-gray-600 border border-gray-300 rounded px-2 py-1">En ligne</span>
+                        <h3 class="text-base font-medium text-gray-900">{{ __('Activité récente') }}</h3>
+                        <span class="text-xs font-medium text-gray-600 border border-gray-300 rounded px-2 py-1">{{ __('En ligne') }}</span>
                     </div>
                     <div class="mt-4">
                         <p class="text-sm text-gray-600">{{ __("You're logged in!") }}</p>
@@ -35,7 +35,7 @@
                 <!-- Carte progrès -->
                 <div class="card-minimal p-6">
                     <div class="flex items-center justify-between">
-                        <h3 class="text-base font-medium text-gray-900">Progrès</h3>
+                        <h3 class="text-base font-medium text-gray-900">{{ __('Progrès') }}</h3>
                     </div>
                     <div class="mt-4">
                         <div class="h-1 w-full bg-gray-200 rounded-full">

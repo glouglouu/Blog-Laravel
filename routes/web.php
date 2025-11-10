@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Auth\PasswordController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckUserRole;
 use App\Http\Controllers\PostController;
@@ -24,6 +25,13 @@ Route::get('/language/{locale}', function ($locale) {
     if (in_array($locale, ['en', 'fr', 'de'])) {
         Session::put('locale', $locale);
         App::setLocale($locale);
+        
+        // Redirect back to the previous page, or home if no previous page
+        $previousUrl = url()->previous();
+        if ($previousUrl && $previousUrl !== url()->current()) {
+            return redirect($previousUrl);
+        }
+        return redirect('/');
     }
     return redirect()->back();
 })->name('language.switch');
@@ -32,6 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::put('/password', [PasswordController::class, 'update'])->name('password.update');
 });
 
 Route::post('/subscriptions/{subscription}/subscribe', [SubscriptionsController::class, 'subscribe'])->name('subscriptions.subscribe');

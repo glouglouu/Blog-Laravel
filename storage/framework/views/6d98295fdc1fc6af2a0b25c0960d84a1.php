@@ -13,11 +13,11 @@
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Breadcrumb -->
             <nav class="mb-8 flex items-center space-x-2 text-sm text-gray-500">
-                <a href="/" class="hover:text-gray-900">Accueil</a>
+                <a href="/" class="hover:text-gray-900"><?php echo e(__('Home')); ?></a>
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
-                <a href="<?php echo e(route('posts.index')); ?>" class="hover:text-gray-900">Articles</a>
+                <a href="<?php echo e(route('posts.index')); ?>" class="hover:text-gray-900"><?php echo e(__('Articles')); ?></a>
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
@@ -54,12 +54,14 @@
                                         <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"></path>
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"></path>
                                     </svg>
-                                    Premium
+                                    <?php echo e(__('Premium')); ?>
+
                                 </span>
                             <?php endif; ?>
                             <?php if(!$post->is_published): ?>
                                 <span class="text-xs font-medium text-gray-500 border border-gray-300 rounded px-2 py-1">
-                                    Brouillon
+                                    <?php echo e(__('Brouillon')); ?>
+
                                 </span>
                             <?php endif; ?>
                         </div>
@@ -77,10 +79,22 @@
                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any(['update', 'delete'], $post)): ?>
                         <div class="mb-6 flex items-center space-x-2 border-b border-gray-200 pb-6">
                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('update', $post)): ?>
-                                <span class="text-sm text-gray-500 italic">Modification à venir</span>
+                                <a href="<?php echo e(route('posts.edit', $post)); ?>" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors">
+                                    <?php echo e(__('Modifier l\'article')); ?>
+
+                                </a>
                             <?php endif; ?>
                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete', $post)): ?>
-                                <span class="text-sm text-gray-500 italic">Suppression à venir</span>
+                                <form action="<?php echo e(route('posts.destroy', $post)); ?>" method="POST" class="inline">
+                                    <?php echo csrf_field(); ?>
+                                    <?php echo method_field('DELETE'); ?>
+                                    <button type="submit" 
+                                            class="text-sm font-medium text-red-600 hover:text-red-800 transition-colors"
+                                            onclick="return confirm('<?php echo e(__('Êtes-vous sûr de vouloir supprimer cet article ?')); ?>')">
+                                        <?php echo e(__('Supprimer l\'article')); ?>
+
+                                    </button>
+                                </form>
                             <?php endif; ?>
                         </div>
                     <?php endif; ?>
@@ -98,7 +112,7 @@
 
                         </span>
                         <span class="text-sm text-gray-500">
-                            <?php echo e($post->comments->count()); ?> commentaire<?php echo e($post->comments->count() > 1 ? 's' : ''); ?>
+                            <?php echo e($post->comments->count()); ?> <?php echo e($post->comments->count() > 1 ? __('commentaires') : __('commentaire')); ?>
 
                         </span>
                     </div>
@@ -121,13 +135,13 @@
             <!-- Comments Section -->
             <div class="mt-12">
                 <h2 class="mb-8 text-2xl font-semibold text-gray-900">
-                    Commentaires (<?php echo e($post->comments->count()); ?>)
+                    <?php echo e(__('Commentaires')); ?> (<?php echo e($post->comments->count()); ?>)
                 </h2>
 
                 <!-- Add Comment Form -->
                 <?php if(auth()->guard()->check()): ?>
                     <div class="mb-8 border border-gray-200 rounded-lg bg-white p-6 shadow-sm">
-                        <h3 class="mb-4 text-base font-medium text-gray-900">Laisser un commentaire</h3>
+                        <h3 class="mb-4 text-base font-medium text-gray-900"><?php echo e(__('Laisser un commentaire')); ?></h3>
                         <form action="<?php echo e(route('comments.store')); ?>" method="POST">
                             <?php echo csrf_field(); ?>
                             <input type="hidden" name="post_id" value="<?php echo e($post->id); ?>">
@@ -142,7 +156,7 @@ $message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php unset($messag
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" 
-                                placeholder="Partagez votre avis sur cet article..." 
+                                placeholder="<?php echo e(__('Partagez votre avis sur cet article...')); ?>" 
                                 required
                             ><?php echo e(old('content')); ?></textarea>
                             <?php $__errorArgs = ['content'];
@@ -157,18 +171,20 @@ endif;
 unset($__errorArgs, $__bag); ?>
                             <div class="mt-4 flex items-center justify-end">
                                 <button type="submit" class="btn-minimal-primary">
-                                    Publier le commentaire
+                                    <?php echo e(__('Publier le commentaire')); ?>
+
                                 </button>
                             </div>
                         </form>
                     </div>
                 <?php else: ?>
                     <div class="mb-8 border border-dashed border-gray-300 rounded-lg bg-gray-50 p-8 text-center">
-                        <h3 class="text-base font-medium text-gray-900">Connectez-vous pour commenter</h3>
-                        <p class="mt-2 text-sm text-gray-600">Vous devez être connecté pour laisser un commentaire sur cet article.</p>
+                        <h3 class="text-base font-medium text-gray-900"><?php echo e(__('Connectez-vous pour commenter')); ?></h3>
+                        <p class="mt-2 text-sm text-gray-600"><?php echo e(__('Vous devez être connecté pour laisser un commentaire sur cet article.')); ?></p>
                         <div class="mt-6">
                             <a href="<?php echo e(route('login')); ?>" class="btn-minimal-primary">
-                                Se connecter
+                                <?php echo e(__('Se connecter')); ?>
+
                             </a>
                         </div>
                     </div>
@@ -196,8 +212,8 @@ unset($__errorArgs, $__bag); ?>
                         </div>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                         <div class="border border-dashed border-gray-300 rounded-lg bg-gray-50/50 p-12 text-center">
-                            <p class="text-base font-medium text-gray-900">Aucun commentaire pour le moment</p>
-                            <p class="mt-2 text-sm text-gray-600">Soyez le premier à partager votre avis sur cet article !</p>
+                            <p class="text-base font-medium text-gray-900"><?php echo e(__('Aucun commentaire pour le moment')); ?></p>
+                            <p class="mt-2 text-sm text-gray-600"><?php echo e(__('Soyez le premier à partager votre avis sur cet article !')); ?></p>
                         </div>
                     <?php endif; ?>
                 </div>

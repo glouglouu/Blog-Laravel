@@ -1,4 +1,4 @@
-    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+<div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
     <?php $__currentLoopData = $posts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $post): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         <?php if (isset($component)) { $__componentOriginalc197a308f8f389d8eec7ce56253b9544 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc197a308f8f389d8eec7ce56253b9544 = $attributes; } ?>
@@ -21,5 +21,6 @@
 <?php unset($__componentOriginalc197a308f8f389d8eec7ce56253b9544); ?>
 <?php endif; ?>
     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-    </div>
+</div>
+
 <?php /**PATH C:\Users\glouglou\Documents\Projets cours\php-laravel\blog-with-laravel\resources\views/posts/partials/all-articles.blade.php ENDPATH**/ ?>

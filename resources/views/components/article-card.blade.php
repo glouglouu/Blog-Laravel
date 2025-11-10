@@ -13,11 +13,11 @@
             </div>
             @if ($post->paid)
                 <span class="text-xs font-medium text-gray-600 border border-gray-300 rounded px-2 py-1">
-                    Premium
+                    {{ __('Premium') }}
                 </span>
             @else
                 <span class="text-xs font-medium text-gray-500">
-                    Gratuit
+                    {{ __('Free') }}
                 </span>
             @endif
         </div>
@@ -36,34 +36,15 @@
 
         <!-- Meta info -->
         <div class="mb-4 flex items-center space-x-4 text-xs text-gray-500">
-            <span>{{ $post->comments->count() }} commentaires</span>
+            <span>{{ $post->comments->count() }} {{ $post->comments->count() > 1 ? __('commentaires') : __('commentaire') }}</span>
         </div>
 
         <!-- Actions -->
         <div class="flex items-center gap-2 pt-4 border-t border-gray-100">
             <a href="{{ route('posts.show', $post) }}" 
                class="text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors">
-                Lire l'article →
+                {{ __('Lire l\'article →') }}
             </a>
-            
-            @can('update', $post)
-                <a href="{{ route('posts.edit', $post) }}" 
-                   class="ml-auto text-sm text-gray-600 hover:text-gray-900 transition-colors">
-                    Modifier
-                </a>
-            @endcan
-            
-            @can('delete', $post)
-                <form action="{{ route('posts.destroy', $post) }}" method="POST" class="inline">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" 
-                            class="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?')">
-                        Supprimer
-                    </button>
-                </form>
-            @endcan
         </div>
     </div>
 </article>

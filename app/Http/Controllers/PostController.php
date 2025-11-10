@@ -18,6 +18,7 @@ class PostController extends Controller
         $posts = Post::where('is_published', true)
             ->with(['user', 'comments'])
             ->orderBy('published_at', 'desc')
+            ->orderBy('created_at', 'desc')
             ->get();
         
         return view('posts.index', compact('posts'));
@@ -112,8 +113,18 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        //
-        return redirect()->route('posts.index');
+        $data = $request->validated();
+        
+        // Generate slug from title if not provided
+        if (empty($data['slug'])) {
+            $data['slug'] = \Illuminate\Support\Str::slug($data['title']);
+        }
+        
+        // Update the post with validated data
+        $post->update($data);
+
+        return redirect()->route('posts.show', $post)
+            ->with('success', 'L\'article a été modifié avec succès.');
     }
 
     /**
@@ -121,7 +132,13 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
-        return redirect()->route('posts.index');
+        // Delete all comments associated with this post first
+        $post->comments()->delete();
+        
+        // Delete the post
+        $post->delete();
+
+        return redirect()->route('posts.index')
+            ->with('success', 'L\'article a été supprimé avec succès.');
     }
 }

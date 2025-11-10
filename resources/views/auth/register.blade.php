@@ -8,8 +8,8 @@
                 </svg>
             </div>
         </div>
-        <h2 class="text-2xl font-semibold text-gray-900">Créer un compte</h2>
-        <p class="mt-2 text-sm text-gray-600">Rejoignez notre communauté</p>
+        <h2 class="text-2xl font-semibold text-gray-900">{{ __('Créer un compte') }}</h2>
+        <p class="mt-2 text-sm text-gray-600">{{ __('Rejoignez notre communauté') }}</p>
     </div>
 
     <form method="POST" action="{{ route('register') }}" class="space-y-6">

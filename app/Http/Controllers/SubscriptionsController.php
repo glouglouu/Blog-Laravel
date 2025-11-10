@@ -11,10 +11,17 @@ class SubscriptionsController extends Controller
     //
     public function index()
     {
-        $subscriptions = Subscription::all();
-        // check if user have a subscription
+        // Redirect admins away from subscriptions page
         $user = auth()->user();
+        if ($user && $user->hasRole('admin')) {
+            return redirect()->route('dashboard')
+                ->with('info', 'Les administrateurs n\'ont pas besoin d\'abonnements.');
+        }
+
+        // Get unique subscriptions (in case of duplicates in database)
+        $subscriptions = Subscription::distinct()->get()->unique('name');
         
+        // check if user have a subscription
         if ($user) {
             // Get the active subscription of the user
             $userSubscriptions = $user->subscriptions()

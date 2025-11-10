@@ -35,14 +35,19 @@
                         <!-- Navigation Links Desktop -->
                         <div class="hidden items-center space-x-8 md:flex">
                             <a href="/" class="text-sm font-medium text-gray-600 hover:text-gray-900">
-                                Accueil
+                                <?php echo e(__('Home')); ?>
+
                             </a>
                             <a href="<?php echo e(route('posts.index')); ?>" class="text-sm font-medium text-gray-600 hover:text-gray-900">
-                                Articles
+                                <?php echo e(__('Articles')); ?>
+
                             </a>
-                            <a href="<?php echo e(route('subscriptions.index')); ?>" class="text-sm font-medium text-gray-600 hover:text-gray-900">
-                                Abonnements
-                            </a>
+                            <?php if(!auth()->check() || (auth()->check() && !auth()->user()->hasRole('admin'))): ?>
+                                <a href="<?php echo e(route('subscriptions.index')); ?>" class="text-sm font-medium text-gray-600 hover:text-gray-900">
+                                    <?php echo e(__('Subscriptions')); ?>
+
+                                </a>
+                            <?php endif; ?>
                         </div>
 
                         <!-- Auth Buttons -->
@@ -51,22 +56,26 @@
                                 <?php if(auth()->guard()->check()): ?>
                                     <?php if(auth()->user()->hasRole('admin')): ?>
                                         <a href="<?php echo e(url('/dashboard')); ?>" class="hidden text-sm font-medium text-gray-600 hover:text-gray-900 md:inline-flex">
-                                            Dashboard
+                                            <?php echo e(__('Dashboard')); ?>
+
                                         </a>
                                     <?php endif; ?>
                                     <form method="POST" action="<?php echo e(route('logout')); ?>" class="hidden md:inline-block">
                                         <?php echo csrf_field(); ?>
                                         <button type="submit" class="text-sm font-medium text-gray-600 hover:text-gray-900">
-                                            Déconnexion
+                                            <?php echo e(__('Déconnexion')); ?>
+
                                         </button>
                                     </form>
                                 <?php else: ?>
                                     <a href="<?php echo e(route('login')); ?>" class="hidden text-sm font-medium text-gray-600 hover:text-gray-900 md:inline-flex">
-                                        Connexion
+                                        <?php echo e(__('Connexion')); ?>
+
                                     </a>
                                     <?php if(Route::has('register')): ?>
                                         <a href="<?php echo e(route('register')); ?>" class="hidden btn-minimal-primary md:inline-flex">
-                                            Inscription
+                                            <?php echo e(__('Inscription')); ?>
+
                                         </a>
                                     <?php endif; ?>
                                 <?php endif; ?>
@@ -81,33 +90,39 @@
                 <div class="max-w-7xl mx-auto px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
                     <div class="text-center">
                         <h1 class="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
-                            Explorez le monde de la technologie
+                            <?php echo e(__('Explore the world of')); ?> <?php echo e(__('technology')); ?>
+
                         </h1>
                         <p class="mt-6 text-lg leading-relaxed text-gray-600 max-w-2xl mx-auto">
-                            Découvrez des articles passionnants sur le développement web, les dernières tendances tech, et des tutoriels pratiques pour améliorer vos compétences.
+                            <?php echo e(__('Découvrez des articles passionnants sur le développement web, les dernières tendances tech, et des tutoriels pratiques pour améliorer vos compétences.')); ?>
+
                         </p>
                         <div class="mt-10 flex flex-col gap-4 sm:flex-row sm:justify-center">
                             <a href="<?php echo e(route('posts.index')); ?>" class="btn-minimal-primary">
-                                Découvrir les articles
+                                <?php echo e(__('Découvrir les articles')); ?>
+
                             </a>
-                            <a href="<?php echo e(route('subscriptions.index')); ?>" class="btn-minimal">
-                                Voir les abonnements
-                            </a>
+                            <?php if(!auth()->check() || (auth()->check() && !auth()->user()->hasRole('admin'))): ?>
+                                <a href="<?php echo e(route('subscriptions.index')); ?>" class="btn-minimal">
+                                    <?php echo e(__('Voir les abonnements')); ?>
+
+                                </a>
+                            <?php endif; ?>
                         </div>
                         
                         <!-- Stats -->
                         <div class="mt-16 grid grid-cols-3 gap-8 max-w-md mx-auto">
                             <div>
                                 <p class="text-3xl font-semibold text-gray-900">50+</p>
-                                <p class="mt-1 text-sm text-gray-600">Articles</p>
+                                <p class="mt-1 text-sm text-gray-600"><?php echo e(__('Articles')); ?></p>
                             </div>
                             <div>
                                 <p class="text-3xl font-semibold text-gray-900">10K+</p>
-                                <p class="mt-1 text-sm text-gray-600">Lecteurs</p>
+                                <p class="mt-1 text-sm text-gray-600"><?php echo e(__('Lecteurs')); ?></p>
                             </div>
                             <div>
                                 <p class="text-3xl font-semibold text-gray-900">5★</p>
-                                <p class="mt-1 text-sm text-gray-600">Évaluation</p>
+                                <p class="mt-1 text-sm text-gray-600"><?php echo e(__('Évaluation')); ?></p>
                             </div>
                         </div>
                     </div>
@@ -119,10 +134,12 @@
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="mb-12 text-center">
                         <h2 class="text-3xl font-semibold text-gray-900">
-                            Derniers Articles
+                            <?php echo e(__('Latest Articles')); ?>
+
                         </h2>
                         <p class="mt-4 text-sm text-gray-600">
-                            Découvrez nos articles les plus récents et restez à jour avec les dernières tendances
+                            <?php echo e(__('Découvrez nos articles les plus récents et restez à jour avec les dernières tendances')); ?>
+
                         </p>
                     </div>
                     <?php echo $__env->make('posts.partials.all-articles', ['posts' => $posts], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
@@ -134,15 +151,18 @@
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="text-center">
                         <h2 class="text-2xl font-semibold text-gray-900">
-                            Restez informé des nouveautés
+                            <?php echo e(__('Restez informé des nouveautés')); ?>
+
                         </h2>
                         <p class="mt-4 text-sm text-gray-600">
-                            Inscrivez-vous à notre newsletter pour recevoir les derniers articles directement dans votre boîte mail
+                            <?php echo e(__('Inscrivez-vous à notre newsletter pour recevoir les derniers articles directement dans votre boîte mail')); ?>
+
                         </p>
                         <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
-                            <input type="email" placeholder="Votre adresse email" class="border border-gray-300 rounded-md px-4 py-2 focus:border-gray-900 focus:ring-0 sm:w-96">
+                            <input type="email" placeholder="<?php echo e(__('Votre adresse email')); ?>" class="border border-gray-300 rounded-md px-4 py-2 focus:border-gray-900 focus:ring-0 sm:w-96">
                             <button class="btn-minimal-primary">
-                                S'abonner
+                                <?php echo e(__('S\'abonner')); ?>
+
                             </button>
                         </div>
                     </div>
@@ -160,36 +180,39 @@
                                 <span class="text-lg font-semibold text-gray-900">TechBlog</span>
                             </div>
                             <p class="mt-4 text-sm text-gray-600">
-                                Votre source d'inspiration pour la technologie et le développement web.
+                                <?php echo e(__('Your source of inspiration')); ?>
+
                             </p>
                         </div>
 
                         <!-- Quick Links -->
                         <div>
-                            <h3 class="mb-4 text-sm font-medium text-gray-900">Navigation</h3>
+                            <h3 class="mb-4 text-sm font-medium text-gray-900"><?php echo e(__('Navigation')); ?></h3>
                             <ul class="space-y-3">
-                                <li><a href="/" class="text-sm text-gray-600 hover:text-gray-900">Accueil</a></li>
-                                <li><a href="<?php echo e(route('posts.index')); ?>" class="text-sm text-gray-600 hover:text-gray-900">Articles</a></li>
-                                <li><a href="<?php echo e(route('subscriptions.index')); ?>" class="text-sm text-gray-600 hover:text-gray-900">Abonnements</a></li>
+                                <li><a href="/" class="text-sm text-gray-600 hover:text-gray-900"><?php echo e(__('Home')); ?></a></li>
+                                <li><a href="<?php echo e(route('posts.index')); ?>" class="text-sm text-gray-600 hover:text-gray-900"><?php echo e(__('Articles')); ?></a></li>
+                                <?php if(!auth()->check() || (auth()->check() && !auth()->user()->hasRole('admin'))): ?>
+                                    <li><a href="<?php echo e(route('subscriptions.index')); ?>" class="text-sm text-gray-600 hover:text-gray-900"><?php echo e(__('Subscriptions')); ?></a></li>
+                                <?php endif; ?>
                             </ul>
                         </div>
 
                         <!-- Resources -->
                         <div>
-                            <h3 class="mb-4 text-sm font-medium text-gray-900">Ressources</h3>
+                            <h3 class="mb-4 text-sm font-medium text-gray-900"><?php echo e(__('Ressources')); ?></h3>
                             <ul class="space-y-3">
-                                <li><a href="#" class="text-sm text-gray-600 hover:text-gray-900">Documentation</a></li>
-                                <li><a href="#" class="text-sm text-gray-600 hover:text-gray-900">Tutoriels</a></li>
-                                <li><a href="#" class="text-sm text-gray-600 hover:text-gray-900">Support</a></li>
+                                <li><a href="#" class="text-sm text-gray-600 hover:text-gray-900"><?php echo e(__('Documentation')); ?></a></li>
+                                <li><a href="#" class="text-sm text-gray-600 hover:text-gray-900"><?php echo e(__('Tutoriels')); ?></a></li>
+                                <li><a href="#" class="text-sm text-gray-600 hover:text-gray-900"><?php echo e(__('Support')); ?></a></li>
                             </ul>
                         </div>
 
                         <!-- Legal -->
                         <div>
-                            <h3 class="mb-4 text-sm font-medium text-gray-900">Légal</h3>
+                            <h3 class="mb-4 text-sm font-medium text-gray-900"><?php echo e(__('Légal')); ?></h3>
                             <ul class="space-y-3">
-                                <li><a href="#" class="text-sm text-gray-600 hover:text-gray-900">Confidentialité</a></li>
-                                <li><a href="#" class="text-sm text-gray-600 hover:text-gray-900">Conditions</a></li>
+                                <li><a href="#" class="text-sm text-gray-600 hover:text-gray-900"><?php echo e(__('Confidentialité')); ?></a></li>
+                                <li><a href="#" class="text-sm text-gray-600 hover:text-gray-900"><?php echo e(__('Conditions')); ?></a></li>
                             </ul>
                         </div>
                     </div>
@@ -198,7 +221,8 @@
                     <div class="mt-12 border-t border-gray-200 pt-8">
                         <div class="flex flex-col items-center justify-between gap-4 md:flex-row">
                             <p class="text-sm text-gray-600">
-                                © 2024 TechBlog. Tous droits réservés.
+                                © 2024 TechBlog. <?php echo e(__('Tous droits réservés.')); ?>
+
                             </p>
                             <p class="text-xs text-gray-500">
                                 Built with Laravel v<?php echo e(Illuminate\Foundation\Application::VERSION); ?> & PHP v<?php echo e(PHP_VERSION); ?>
